@@ -18,6 +18,7 @@ export async function proxy(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/notes");
 
   let isAuthenticated = false;
+  let response = NextResponse.next();
 
   if (accessToken) {
     isAuthenticated = true;
@@ -25,18 +26,22 @@ export async function proxy(request: NextRequest) {
 
   if (!accessToken && refreshToken) {
     try {
-      const response = await checkSession();
+      const res = await checkSession();
 
-      const res = NextResponse.next();
+      // const res = NextResponse.next();
 
-      const setCookie = response.headers["set-cookie"];
+      const setCookie = res.headers["set-cookie"];
       if (setCookie) {
-        setCookie.forEach((cookie) => {
-          res.headers.append("set-cookie", cookie);
-        });
+        if (Array.isArray(setCookie)) {
+          setCookie.forEach((cookie) => {
+            response.headers.append("set-cookie", cookie);
+          });
+        } else {
+          response.headers.set("set-cookie", setCookie);
+        }
       }
 
-      return res;
+      isAuthenticated = true;
     } catch {
       isAuthenticated = false;
     }
@@ -50,7 +55,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
