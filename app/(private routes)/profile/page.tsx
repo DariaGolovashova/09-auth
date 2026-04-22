@@ -21,7 +21,7 @@ async function ProfilePage() {
           </Link>
         </div>
         <div className={css.avatarWrapper}>
-          <img
+          <Image
             src={user.avatar}
             alt="User Avatar"
             width={120}
