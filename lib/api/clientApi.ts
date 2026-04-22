@@ -72,18 +72,18 @@ export const deleteNote = async (id: string): Promise<Note> => {
 //   const res = await api.post("/auth/register", data);
 //   return res.data;
 // };
-export const register = async (data: AuthData): Promise<AuthResponse> => {
+export const register = async (data: AuthData): Promise<User> => {
   const res = await api.post<AuthResponse>("/auth/register", data);
-  return res.data;
+  return res.data.user;
 };
 
 // export const login = async (data: { email: string; password: string }) => {
 //   const res = await api.post("/auth/login", data);
 //   return res.data;
 // };
-export const login = async (data: AuthData): Promise<AuthResponse> => {
+export const login = async (data: AuthData): Promise<User> => {
   const res = await api.post<AuthResponse>("/auth/login", data);
-  return res.data;
+  return res.data.user;
 };
 export const logout = async () => {
   const res = await api.post("/auth/logout");
@@ -95,7 +95,8 @@ export const logout = async () => {
 //   return res.data;
 // };
 export const checkSession = async (): Promise<User | null> => {
-  const res = await api.get<AuthResponse | null>("/auth/session");
+  // const res = await api.get<AuthResponse | null>("/auth/session");
+  const res = await api.get<AuthResponse>("/auth/session");
   return res.data?.user ?? null;
 };
 

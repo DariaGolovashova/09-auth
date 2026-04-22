@@ -22,7 +22,7 @@ function SignUpPage() {
         password: formData.get("password") as string,
       });
 
-      setUser(data.user);
+      setUser(data);
 
       router.push("/profile");
     } catch {

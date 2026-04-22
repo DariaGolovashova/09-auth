@@ -17,8 +17,13 @@ export default function AuthProvider({
       try {
         const data = await checkSession();
 
-        if (data?.user) {
-          setUser(data.user);
+        // if (data?.user) {
+        //   setUser(data.user);
+        // } else {
+        //   clearIsAuthenticated();
+        // }
+        if (data) {
+          setUser(data);
         } else {
           clearIsAuthenticated();
         }

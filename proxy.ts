@@ -37,7 +37,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isAuthenticated && isAuthPage) {
-    return NextResponse.redirect(new URL("/", request.url)); // ✅ важливо!
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

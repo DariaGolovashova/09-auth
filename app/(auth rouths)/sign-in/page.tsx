@@ -21,7 +21,7 @@ function SignInPage() {
         password: formData.get("password") as string,
       });
 
-      setUser(data.user);
+      setUser(data);
 
       router.push("/notes");
     } catch {
