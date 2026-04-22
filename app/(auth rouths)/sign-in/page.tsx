@@ -12,13 +12,16 @@ function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
 
     const formData = new FormData(e.currentTarget);
     try {
-      await login({
+      const data = await login({
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       });
+
+      setUser(data.user);
 
       router.push("/notes");
     } catch {
@@ -27,7 +30,7 @@ function SignInPage() {
   };
   return (
     <main className={css.mainContent}>
-      <form className={css.form}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <h1 className={css.formTitle}>Sign in</h1>
 
         <div className={css.formGroup}>
@@ -58,7 +61,7 @@ function SignInPage() {
           </button>
         </div>
 
-        <p className={css.error}>{error}</p>
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );

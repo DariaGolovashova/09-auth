@@ -1,8 +1,16 @@
-"use client";
-
 import css from "./ProfilePage.module.css";
 import Link from "next/link";
-function ProfilePage() {
+import Image from "next/image";
+import { getMe } from "@/lib/api/serverApi";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description: "User profile page",
+};
+
+async function ProfilePage() {
+  const user = await getMe();
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
@@ -22,8 +30,8 @@ function ProfilePage() {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: your_username</p>
-          <p>Email: your_email@example.com</p>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
         </div>
       </div>
     </main>

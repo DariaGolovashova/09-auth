@@ -1,3 +1,4 @@
+"use client";
 import css from "./AuthNavigation.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,8 +31,10 @@ function AuthNavigation() {
             </Link>
           </li>
           <li className={css.navigationItem}>
-            <p className={css.userEmail}>User email</p>
-            <button className={css.logoutButton}>Logout</button>
+            <p className={css.userEmail}>{user?.email}</p>
+            <button className={css.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
           </li>
         </>
       ) : (

@@ -3,23 +3,28 @@ import css from "./SignUpPage.module.css";
 import { useState } from "react";
 import { register } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/lib/store/authStore";
 
 function SignUpPage() {
   const [error, setError] = useState("");
   const router = useRouter();
+  const { setUser } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
 
     const formData = new FormData(e.currentTarget);
 
     try {
-      await register({
+      const data = await register({
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       });
 
-      router.push("/notes");
+      setUser(data.user);
+
+      router.push("/profile");
     } catch {
       setError("Registration failed");
     }
@@ -27,7 +32,7 @@ function SignUpPage() {
   return (
     <main className={css.mainContent}>
       <h1 className={css.formTitle}>Sign up</h1>
-      <form className={css.form}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -56,7 +61,7 @@ function SignUpPage() {
           </button>
         </div>
 
-        <p className={css.error}>Error</p>
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );
