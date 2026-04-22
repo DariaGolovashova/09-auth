@@ -6,8 +6,8 @@ import Link from "next/link";
 // import { useDebouncedCallback } from "use-debounce";
 
 // import { fetchNotes, createNote } from "../../lib/api";
-import { fetchNotes } from "../../lib/api";
-import type { FetchNotesResponse } from "../../lib/api";
+import { fetchNotes } from "../../lib/api/api";
+import type { FetchNotesResponse } from "../../lib/api/api";
 // import type { FetchNotesParams } from "../../services/noteService";
 // import type { Note } from "../../types/note";
 // import type { NoteFormValues } from "../NoteForm/NoteForm";

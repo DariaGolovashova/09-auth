@@ -2,7 +2,11 @@
 // import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNotes, FetchNotesResponse, FetchNotesParams } from "@/lib/api";
+import {
+  fetchNotes,
+  FetchNotesResponse,
+  FetchNotesParams,
+} from "@/lib/api/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 // import Modal from "@/components/Modal/Modal";
