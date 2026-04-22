@@ -1,5 +1,5 @@
-import { fetchNoteById } from "@/lib/api/api";
-import { fetchNotes } from "@/lib/api/api";
+import { fetchNoteById } from "@/lib/api/clientApi";
+import { fetchNotes } from "@/lib/api/clientApi";
 import NotesClient from "../filter/[...slug]/Notes.client";
 import {
   QueryClient,

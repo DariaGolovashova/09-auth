@@ -12,7 +12,7 @@
 //   );
 // }
 // export default Page;
-import { fetchNoteById } from "@/lib/api/api";
+import { fetchNoteById } from "@/lib/api/clientApi";
 import {
   QueryClient,
   dehydrate,
