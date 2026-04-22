@@ -8,6 +8,6 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     router.refresh();
   }, [router]);
-  return <>{children};</>;
+  return <>{children}</>;
 }
 export default AuthLayout;

@@ -23,7 +23,7 @@ function SignInPage() {
 
       setUser(data);
 
-      router.push("/notes");
+      router.push("/profile");
     } catch {
       setError("Invalid credentials");
     }

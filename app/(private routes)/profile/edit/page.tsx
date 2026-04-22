@@ -65,7 +65,7 @@ function EditProfilePage() {
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
 
-        <img
+        <Image
           src={user.avatar}
           alt="User Avatar"
           width={120}
@@ -91,7 +91,11 @@ function EditProfilePage() {
             <button type="submit" className={css.saveButton}>
               Save
             </button>
-            <button type="button" className={css.cancelButton}>
+            <button
+              type="button"
+              className={css.cancelButton}
+              onClick={handleCancel}
+            >
               Cancel
             </button>
           </div>
