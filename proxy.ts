@@ -18,7 +18,8 @@ export async function proxy(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/notes");
 
   let isAuthenticated = false;
-  let response = NextResponse.next();
+  // let response = NextResponse.next();
+  let cookiesToSet: string[] = [];
 
   if (accessToken) {
     isAuthenticated = true;
@@ -32,31 +33,52 @@ export async function proxy(request: NextRequest) {
 
       const setCookie = res.headers["set-cookie"];
       if (setCookie) {
+        // if (Array.isArray(setCookie)) {
+        //   setCookie.forEach((cookie) => {
+        //     response.headers.append("set-cookie", cookie);
+        //   });
+        // } else {
+        //   response.headers.set("set-cookie", setCookie);
+        // }
         if (Array.isArray(setCookie)) {
-          setCookie.forEach((cookie) => {
-            response.headers.append("set-cookie", cookie);
-          });
+          cookiesToSet = setCookie;
         } else {
-          response.headers.set("set-cookie", setCookie);
+          cookiesToSet = [setCookie];
         }
       }
-
       isAuthenticated = true;
     } catch {
       isAuthenticated = false;
     }
   }
+  const applyCookies = (res: NextResponse) => {
+    cookiesToSet.forEach((cookie) => {
+      res.headers.append("set-cookie", cookie);
+    });
+    return res;
+  };
 
+  //
   if (!isAuthenticated && isPrivatePage) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return applyCookies(
+      NextResponse.redirect(new URL("/sign-in", request.url)),
+    );
   }
 
+  // if (!isAuthenticated && isPrivatePage) {
+  //   return NextResponse.redirect(new URL("/sign-in", request.url));
+  // }
   if (isAuthenticated && isAuthPage) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return applyCookies(NextResponse.redirect(new URL("/", request.url)));
   }
-
-  return response;
+  return applyCookies(NextResponse.next());
 }
+
+// if (isAuthenticated && isAuthPage) {
+//   return NextResponse.redirect(new URL("/", request.url));
+// }
+
+//   return response;
 
 export const config = {
   matcher: ["/profile/:path*", "/notes/:path*", "/sign-in", "/sign-up"],
